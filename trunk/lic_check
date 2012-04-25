@@ -1,0 +1,88 @@
+#!/bin/bash
+case "$1" in
+         drc|calibredrc)
+            Fea=calibredrc
+            FPort=1717
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         lvs|calibrelvs)
+            Fea=calibrelvs
+            FPort=1717
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         viewer|Laker_Viewer)
+            Fea=viewer
+            FPort=5229
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         L2|Laker_L2)
+            Fea=Laker_L2
+            FPort=5229
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         L3|Laker_L3|laker)
+            Fea=Laker_L3
+            FPort=5229
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         ams|Laker_AMS|ecs)
+            Fea=Laker_AMS
+            FPort=5229
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         verdi|Verdi)
+            Fea=Verdi
+            FPort=5219
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         route|place)
+            Fea=Laker_Custom_Router
+            FPort=5229
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         sft|f3d)
+            Fea=SOLVE_P2P
+            FPort=5331
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         bda|bdasim)
+            Fea=BDA_TOKEN
+            FPort=5330
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         Nanosim|nanosim|xsim|Hsim|hsim)
+            Fea=xsim
+            FPort=27001
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         sx_wva|wva|sx)
+            Fea=sx_wva
+            FPort=27001
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         hspice)
+            Fea=hspice
+            FPort=27001
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         cktcheck)
+            Fea=cktcheck
+            FPort=27001
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         lec)
+            Fea=Conformal_Asic
+            FPort=5280
+            Flexlm=/tools2/cae/Springsoft/Laker/32v3p3/bin/lmstat
+         ;;
+         *)
+            echo "Usage: $0 (bda|nanosim|hspice...)"
+            exit 0
+esac
+HOSTS="rad1 rad2 rad3 rad4 rad5 rad6 rad7 rad8 sun01 sun02 sun02 sun04 sun05 sun06 sun07 sun08 radap1 fuji kssun1 kssun2 kssun3 kssun4 kssun5"
+for i in $HOSTS
+do 
+   echo -n "$i : "
+   $Flexlm -c $FPort@$i -f "$Fea"
+   [ $? = 1 ] && echo  
+done
